@@ -1,0 +1,40 @@
+Q1: Scopes/Closures
+    a. foo() sets x to 2 and returns a function that logs x. foo()() calls this returned function and prints 2.
+       console.log(x) logs the current value of x, which is 2. The output is 2 2.
+    
+    b. items array is initialized to [1, 2, 3] and result to an empty array. 
+       A loop runs three times, pushing a function into result each time.
+       Each pushed function returns items[i] where i is 3 after the loop.
+       result.map((x) => x()) calls each function in result.
+       Since the value of i is 3 after for loop because we initialized i with var, items[3] is undefined, so the output is [undefined, undefined, undefined].
+
+    c. Using let i in the loop gives each iteration its own block-scoped i.
+       Each function pushed to result will have the value of i in that iteration.
+       When result.map((x) => x()) is executed, each function returns items[i] corresponding to the value of i in that iteration.
+       Therefore, the output is [1, 2, 3].
+
+    d.In the for loop, the function is immediately invoked with the current value of i as argument.
+      Each function in result returns items[x] where x is the captured value of i.
+      result.map((x) => x()) calls each function in result.
+      The output is [1, 2, 3].
+
+Q2: Async programming 
+    a. resolveAfter2Seconds() is called, logging "starting slow promise" and starting a 2-second timer.
+       resolveAfter1Second() is called, logging "starting fast promise" and starting a 1-second timer.
+       console.log('done!') is executed immediately, logging "done!".
+       After 1 second, the fast promise resolves, logging "fast promise is done".
+       After 2 seconds, the slow promise resolves, logging "slow promise is done".
+       The output is: "starting slow promise", "starting fast promise", "done!", "fast promise is done", "slow promise is done".
+
+    b. resolveAfter1Second() is called, logging "starting fast promise" and starting a 1-second timer.
+       resolveAfter2Seconds() is called, logging "starting slow promise" and starting a 2-second timer.
+       console.log('done!') is executed immediately, logging "done!".
+       After 1 second, the fast promise resolves, logging "fast promise is done".
+       After 2 seconds, the slow promise resolves, logging "slow promise is done".
+       The output is: "starting fast promise", "starting slow promise", "done!", "fast promise is done", "slow promise is done"
+
+    c. The program awaits resolveAfter2Seconds(), logging "starting slow promise" and pausing until the promise resolves with "slow".
+       After 2 seconds, it logs "slow promise is done" and resolves.
+       It then proceeds to call resolveAfter1Second(), logging "starting fast promise" and setting a timer.
+       It logs "done!" immediately.
+       After 1 second, it logs "fast promise is done" and resolves with "fast".
