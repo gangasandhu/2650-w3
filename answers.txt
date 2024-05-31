@@ -38,3 +38,31 @@ Q2: Async programming
        It then proceeds to call resolveAfter1Second(), logging "starting fast promise" and setting a timer.
        It logs "done!" immediately.
        After 1 second, it logs "fast promise is done" and resolves with "fast".
+
+Q3: Error handling with async/await
+
+   a. Logs "== starting ==" immediately, and both rejectAfter2Seconds() and rejectAfter1Second() are called, and their start messages are logged.
+      After 1 second, the fast promise rejects, caught by the try block, logging "it broke! fast".
+      After 2 seconds, the slow promise rejects, caught by the try block, logging "it broke! slow".
+      Finally, logs "== done ="
+      The final output is:
+      == starting ==
+      starting slow promise
+      starting fast promise
+      it broke! fast
+      it broke! slow
+      == done ==
+
+   b. Logs "== starting ==" immediately and calls both rejectAfter2Seconds() and rejectAfter1Second(), logging their start messages.
+      After 1 second, the fast promise rejects, caught by the try block, logging "it broke! fast".
+      Logs "== done ==" after handling the exception. 
+      Since the fast promise rejection causes an immediate exit from the try block, the slow promise is not awaited within the try block.
+      So, the slow promise rejection is not handled.
+      The final output is:
+      == starting ==
+      starting slow promise
+      starting fast promise
+      it broke! fast
+      == done ==
+
+   c.
