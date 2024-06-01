@@ -65,4 +65,3 @@ Q3: Error handling with async/await
       it broke! fast
       == done ==
 
-   c.
